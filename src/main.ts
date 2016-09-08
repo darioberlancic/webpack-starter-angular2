@@ -1,15 +1,12 @@
+
 import 'zone.js/dist/zone';
 import 'reflect-metadata/Reflect.js';
-import '@angular/platform-browser-dynamic';
-import '@angular/http';
-import '@angular/router';
+import 'jquery';
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
 
-import {bootstrap} from '@angular/platform-browser-dynamic';
-import {HTTP_PROVIDERS} from '@angular/http';
-import {APP_ROUTER_PROVIDERS} from './app.routes';
-import {MyApp} from './components/app';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
-bootstrap(MyApp, [
-  ...HTTP_PROVIDERS,
-  ...APP_ROUTER_PROVIDERS
-]).catch((console) => console.error(console));
+import { AppModule } from './app.module';
+
+platformBrowserDynamic().bootstrapModule(AppModule);

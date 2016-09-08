@@ -12,7 +12,9 @@ module.exports = {
   },
   module: {
     loaders: [
-      {test: /.ts$/, loader: 'ts', query: {compilerOptions: {noEmit: false}}}
+      {test: /\.ts$/, loader: 'ts', query: {compilerOptions: {noEmit: false}}},
+      {test: /\.css$/, loader: 'style!css'},
+      {test: /\.(eot|svg|ttf|woff|woff2)$/, loader: 'file?name=public/fonts/[name].[ext]'}
     ],
     noParse: [path.join(__dirname, 'node_modules', 'angular2', 'bundles')]
   },
@@ -20,5 +22,12 @@ module.exports = {
     contentBase: 'src',
     historyApiFallback: true
   },
-  devtool: 'source-map'
+  devtool: 'source-map',
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: 'jquery',
+      jQuery: 'jquery',
+      'window.jQuery': 'jquery'
+    })
+  ]
 };

@@ -1,0 +1,13 @@
+#header {
+  padding: 2rem;
+  background-color: #eee;
+}
+
+#header h1 {
+  margin: 0 0 2.5rem 0;
+}
+
+#nav {
+  list-style: none;
+  margin-bottom: 6rem;
+}
