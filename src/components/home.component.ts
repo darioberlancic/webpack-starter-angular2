@@ -6,25 +6,29 @@ import { DataService } from '../services/data.service';
   selector: 'home',
   template: `
     <div class="container">
-      <div [innerHTML]="frontPage"></div>
+      <div [innerHTML]="data"></div>
     </div>
   `
 })
 export class HomeComponent implements OnInit {
-  public frontPage;
+  public data;
   public errorMessage: string;
 
-  constructor(private ds: DataService) {}
+  constructor(
+    private ds: DataService
+  ) {}
 
   ngOnInit() {
-    this.getFrontPage();
-  }
+    let endpoint = this.ds.getCurrentEndpoint();
 
-  getFrontPage() {
-    this.ds.getFrontPage()
+    this.ds.getData(endpoint)
       .subscribe(
-        data => this.frontPage = data.text.data,
-        error => this.errorMessage = <any>error
+        (data) => {
+          this.data = data.text.data;
+        },
+        (error) => {
+          this.errorMessage = error
+        }
       );
   }
 }

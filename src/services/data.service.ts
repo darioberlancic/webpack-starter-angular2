@@ -6,40 +6,31 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class DataService {
   private headers = new Headers({ 'Accept': 'application/json' });
-  private apiUrl = 'http://kitconcept.com:19080/Plone/';
+  private apiRoot = 'http://kitconcept.com:19080/Plone/';
+  public currentEndpoint = {
+    curr: this.apiRoot + 'front-page'
+  };
 
   constructor(private http: Http) {}
 
-  getIndex(): Observable<Response> {
-    return this.request('');
+  getRoot(): Observable<Response> {
+    return this.request(this.apiRoot);
   }
 
-  getFrontPage(): Observable<Response> {
-    return this.request('front-page');
+  getData(endpoint): Observable<Response> {
+    return this.request(endpoint);
   }
 
-  getNews(): Observable<Response> {
-    return this.request('news');
+  setCurrentEndpoint(endpoint) {
+    this.currentEndpoint.curr = endpoint;
   }
 
-  getEvents(): Observable<Response> {
-    return this.request('events');
-  }
-
-  getMembers(): Observable<Response> {
-    return this.request('Members');
-  }
-
-  getMyFolder(): Observable<Response> {
-    return this.request('my-folder');
-  }
-
-  getNewFolder(): Observable<Response> {
-    return this.request('new-folder');
+  getCurrentEndpoint() {
+    return this.currentEndpoint.curr;
   }
 
   private request(endpoint) {
-    return this.http.get(this.apiUrl + endpoint, { headers: this.headers })
+    return this.http.get(endpoint, { headers: this.headers })
     .map(this.extractData)
     .catch(this.handleError);
   }

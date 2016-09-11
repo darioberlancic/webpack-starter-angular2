@@ -7,29 +7,29 @@ import { DataService } from '../services/data.service';
   template: `
     <div class="container">
       <h3>{{ title }}</h3>
-      <pre>{{ newFolder | json }}</pre>
+      <pre>{{ data | json }}</pre>
     </div>
   `
 })
 export class NewFolderComponent implements OnInit {
-  public newFolder;
+  public data;
   public title;
   public errorMessage: string;
 
   constructor(private ds: DataService) {}
 
   ngOnInit() {
-    this.getNewFolder();
-  }
+    let endpoint = this.ds.getCurrentEndpoint();
 
-  getNewFolder() {
-    this.ds.getNewFolder()
+    this.ds.getData(endpoint)
       .subscribe(
         (data) => {
-          this.newFolder = data;
+          this.data = data;
           this.title = data.title;
         },
-        (error) => { this.errorMessage = error }
+        (error) => {
+          this.errorMessage = error
+        }
       );
   }
 }

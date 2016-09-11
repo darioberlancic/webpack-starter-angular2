@@ -7,29 +7,29 @@ import { DataService } from '../services/data.service';
   template: `
     <div class="container">
       <h3>{{ title }}</h3>
-      <pre>{{ news | json }}</pre>
+      <pre>{{ data | json }}</pre>
     </div>
   `
 })
 export class NewsComponent implements OnInit {
-  public news;
+  public data;
   public title;
-  public errorMessage;
+  public errorMessage: string;
 
   constructor(private ds: DataService) {}
 
   ngOnInit() {
-    this.getNews();
-  }
+    let endpoint = this.ds.getCurrentEndpoint();
 
-  getNews() {
-    this.ds.getNews()
+    this.ds.getData(endpoint)
       .subscribe(
         (data) => {
-          this.news = data,
-          this.title = data.title
+          this.data = data;
+          this.title = data.title;
         },
-        (error) => { this.errorMessage = error }
-      )
+        (error) => {
+          this.errorMessage = error
+        }
+      );
   }
 }
